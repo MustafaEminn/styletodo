@@ -131,3 +131,56 @@
     @apply font-sans;
     }
 }
+
+.falling-checkbox-particle {
+  transform: translate3d(-50%, -50%, 0)
+    rotate(var(--checkbox-burst-rotation-start))
+    scale(var(--checkbox-burst-scale));
+  transform-origin: center;
+  animation-name: checkbox-burst-fall;
+  animation-fill-mode: forwards;
+  animation-timing-function: cubic-bezier(0.2, 0.8, 0.24, 1);
+  will-change: transform, opacity;
+}
+
+@keyframes checkbox-burst-fall {
+  0% {
+    opacity: 1;
+    transform: translate3d(-50%, -50%, 0)
+      rotate(var(--checkbox-burst-rotation-start))
+      scale(var(--checkbox-burst-scale));
+  }
+
+  100% {
+    opacity: 1;
+    transform: translate3d(
+      calc(-50% + var(--checkbox-burst-drift-x)),
+      calc(-50% + var(--checkbox-burst-drop-distance)),
+      0
+    ) rotate(var(--checkbox-burst-rotation-end))
+      scale(var(--checkbox-burst-scale));
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .falling-checkbox-particle {
+    animation-name: checkbox-burst-fall-reduced;
+    animation-timing-function: linear;
+  }
+}
+
+@keyframes checkbox-burst-fall-reduced {
+  0% {
+    opacity: 1;
+    transform: translate3d(-50%, -50%, 0) scale(var(--checkbox-burst-scale));
+  }
+
+  100% {
+    opacity: 1;
+    transform: translate3d(
+      calc(-50% + var(--checkbox-burst-drift-x)),
+      calc(-50% + var(--checkbox-burst-drop-distance)),
+      0
+    ) scale(var(--checkbox-burst-scale));
+  }
+}
